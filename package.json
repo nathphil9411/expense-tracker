@@ -1,0 +1,27 @@
+{
+  "name": "personal-expense-tracker-app",
+  "version": "1.0.0",
+  "description": "tracks your personal finance and budget",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "finance"
+  ],
+  "author": "Nathaniel Ezeanaka",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jest": "^29.7.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.3.3",
+    "supertest": "^7.0.0",
+    "validator": "^13.11.0",
+    "winston": "^3.13.0"
+  }
+}
