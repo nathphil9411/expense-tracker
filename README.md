@@ -1,0 +1,1 @@
+This is an expense tracker app for my personalized spendings
