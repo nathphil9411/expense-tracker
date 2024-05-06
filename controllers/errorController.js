@@ -1,4 +1,5 @@
-const AppError = require("../utils/appError");
+require("dotenv").config();
+const AppError = require("./../utils/appError");
 const handleCastErrorDB = (err) => {
 	const message = `Invalid ${err.path}:${err.value}`;
 	return new AppError(message, 400);
@@ -12,6 +13,12 @@ const handleDuplicateFieldsDB = (err) => {
 
 //validation error handling
 
+const handleValidationErrorDB = (err) => {
+	const errors = Object.values(err.errors).map((el) => el.message);
+
+	const message = `Invalid input data. ${errors.join(". ")}`;
+	return new AppError(message, 400);
+};
 const handleJsonWebTokenError = (err) => {
 	const message = `Sorry provide a valid token`;
 	return new AppError(message, 400);
@@ -50,8 +57,7 @@ module.exports = (err, req, res, next) => {
 		let error = { ...err };
 		if (err.name === "CastError") error = handleCastErrorDB(error);
 		if (err.code === 11100) error = handleDuplicateFieldsDB(error);
-		//if (err.errors.title.name === "ValidatorError")
-		//error = handleValidationDB(error);
+		if (err.name === "ValidatorError") error = handleValidationErrorDB(error);
 		if (err.name === "JsonWebTokenError")
 			error = handleJsonWebTokenError(error);
 		if (err.name === "TokenExpiredError")

@@ -2,16 +2,23 @@ const User = require("../models/userModel");
 const catchAync = require("../utils/catchAysnc");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-require("dotenv").config({ path: "../config/config.env" });
+require("dotenv").config();
 
-const signUp = catchAync(async (req, res, next) => {
-	const newUser = await User.create({
-		name: req.body.name,
-		email: req.body.email,
-		password: req.body.password,
-	});
-	res.status(200).json({ status: "sucess", data: newUser });
-});
+const signUp = async (req, res, next) => {
+	try {
+		console.log("posted");
+		const newUser = new User({
+			name: req.body.name,
+			email: req.body.email,
+			password: req.body.password,
+		});
+		const savedUser = await newUser.save();
+		console.log(savedUser);
+		res.status(200).json({ status: "sucess", data: savedUser });
+	} catch (error) {
+		next(error);
+	}
+};
 
 const signIn = catchAync(async (req, res, next) => {
 	const { email, password } = req.body;
